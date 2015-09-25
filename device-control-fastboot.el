@@ -30,7 +30,7 @@
     (append tramp-cmd
 	    (dctrl-fastboot-run "flash" type (expand-file-name ctrlhost-filename)))))
 
-(defvar dctrl-fastboot-partition-list '("system" "cache" "data" "misc" "recovery" "boot"))
+(defvar dctrl-fastboot-partition-list '("system" "cache" "data" "misc" "recovery" "boot" "logs"))
 
 (defun dctrl-fastboot-action-erase (&optional partition)
   (let ((partition (or partition (ido-completing-read "Partition name: " dctrl-fastboot-partition-list nil t))))
