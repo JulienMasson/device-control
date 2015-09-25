@@ -46,10 +46,10 @@
     (append tramp-cmd
 	    (dctrl-adb-run "root")
 	    (dctrl-action-wait 2)
-	    (dctrl-adb-run "push" (expand-file-name ctrlhost-filename) "/data/local/tmp/update.zip")
+	    (dctrl-adb-run "push" (expand-file-name ctrlhost-filename) "/cache/ota.zip")
 	    (dctrl-adb-run "shell" "mkdir" "-p" "/cache/recovery")
-	    (dctrl-adb-run "shell" "echo '--update_package=/data/local/tmp/update.zip' > /cache/recovery/command")
-	    (dctrl-adb-run "shell" "start" "pre-recovery"))))
+	    (dctrl-adb-run "shell" "echo '--update_package=/cache/ota.zip' > /cache/recovery/command")
+	    (dctrl-adb-run "reboot" "recovery"))))
 
 (defun dctrl-adb-connected-p ()
   (let ((devices (dctrl-adb-guess-device-names)))
