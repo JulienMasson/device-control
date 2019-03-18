@@ -396,7 +396,8 @@ functions should use this."
     (let ((inhibit-read-only t))
       (save-excursion-if-not-at-point-max (current-buffer)
 	(goto-char (point-max))
-	(insert (replace-regexp-in-string "\r" "\n" str))))))
+	(insert (ansi-color-apply
+		 (replace-regexp-in-string "\r" "\n" str)))))))
 
 (defmacro dctrl-internal-run-process (args start-process-fun)
   `(lexical-let ((args args))
