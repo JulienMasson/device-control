@@ -16,15 +16,18 @@
 
 (defun dctrl-fastboot-aosp-out-dir ()
   (when (and aosp-path aosp-board-name)
-    (concat aosp-path "/out/target/product/" aosp-board-name "/")))
+    (concat aosp-path "/out/target/product/" (file-name-nondirectory current-root-path) "/")))
 
 (defun dctrl-fastboot-action-flash (&optional type file)
   (let* ((type (or type (ido-completing-read "Type of flash: " (mapcar 'car dctrl-fastboot-flash-alist) nil t)))
 	 (file file)
 	 tramp-cmd ctrlhost-filename)
     (unless (and file (file-exists-p file))
-      (setq file (ido-read-file-name "File to flash: " (dctrl-fastboot-aosp-out-dir)
-				     (assoc-default type dctrl-fastboot-flash-alist) t)))
+      (let* ((file-path (expand-file-name (concat (dctrl-fastboot-aosp-out-dir)
+						  (assoc-default type dctrl-fastboot-flash-alist))))
+	     (dir-path (file-name-directory file-path))
+	     (file-name (file-name-nondirectory file-path)))
+	(setq file (ido-read-file-name "File to flash: " dir-path file-name t))))
     (multiple-value-setq (tramp-cmd ctrlhost-filename)
       (dctrl-untramp-file file))
     (append tramp-cmd
