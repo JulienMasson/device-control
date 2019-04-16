@@ -32,15 +32,11 @@
       (dctrl-untramp-file src))
     (append tramp-cmd (dctrl-adb-run "push" ctrlhost-filename dst))))
 
-(defun dctrl-adb-aosp-out-dir ()
-  (when (and aosp-path aosp-board-name)
-    (concat aosp-path "/out/target/product/" aosp-board-name "/")))
-
 (defun dctrl-adb-action-ota (&optional file)
   (let ((file file)
 	tramp-cmd ctrlhost-filename)
     (unless (and file (file-exists-p file))
-      (setq file (ido-read-file-name "File to flash: " (dctrl-adb-aosp-out-dir))))
+      (setq file (ido-read-file-name "File to flash: " (if aosp-out-path aosp-out-path))))
     (multiple-value-setq (tramp-cmd ctrlhost-filename)
       (dctrl-untramp-file file))
     (append tramp-cmd
