@@ -6,7 +6,7 @@
   (dctrl-run-process
    (nconc (list fastboot-exec) (if dctrl-automatic-mode
 				   '()
-				 (list "-p" dctrl-device-name)) args)))
+				 (list "-s" dctrl-device-name)) args)))
 
 (defvar dctrl-fastboot-flash-alist '(("boot"		.	"boot.img")
 				     ("bootloader"	.	"bootloader.img")
